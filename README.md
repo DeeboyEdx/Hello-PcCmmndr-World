@@ -8,23 +8,13 @@ An animated 3D globe visualization of CloudWatch session activity.
 
 ## About
 
-This project showcases an interactive 3D globe that visualizes CloudWatch session activity in real-time.
-
-## Getting Started
-
-Clone this repository and open `index.html` in your web browser to view the globe visualization.
-
-```bash
-git clone https://github.com/DeeboyEdx/Hello-PcCmmndr-World.git
-cd Hello-PcCmmndr-World
-# Open index.html in your browser
-```
+This project showcases an interactive 3D globe that visualizes a replay of CloudWatch session activity.
 
 ## Features
 
 - 🌐 Interactive 3D globe
-- 📊 Real-time CloudWatch session tracking
-- ✨ Smooth animations
+- 📊 Replays CloudWatch session on compressed timeline
+- ✨ Janky animations
 
 ---
 
