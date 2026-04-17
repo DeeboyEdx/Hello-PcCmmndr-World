@@ -119,8 +119,10 @@ body { background: #000; overflow: hidden; font-family: 'Segoe UI', sans-serif; 
 #info-wrap {
   position: fixed; top: 16px; left: 16px; z-index: 20;
   display: flex; align-items: flex-start; gap: 10px;
+  pointer-events: none;
 }
 #info-btn {
+  pointer-events: auto;
   width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
   background: rgba(8,12,28,0.75); border: 1px solid rgba(80,130,255,0.35);
   color: #4488ff; font-size: 15px; font-style: italic; font-weight: 700;
@@ -150,6 +152,7 @@ body { background: #000; overflow: hidden; font-family: 'Segoe UI', sans-serif; 
   #info-wrap:hover #info-panel {
     opacity: 1; pointer-events: auto; transform: translateX(0);
   }
+  #info-wrap:hover { pointer-events: auto; }
 }
 #info-wrap.pinned #info-panel {
   opacity: 1; pointer-events: auto; transform: translateX(0);
@@ -286,7 +289,7 @@ const EVENTS           = [{"ts":0.0,"lat":37.09,"lon":-95.71,"region":"NA","loca
 const DEFAULT_SPEED    = 2865;   // playback speed multiplier
 const DEFAULT_DURATION = 2.0;// ping visual duration (real seconds)
 const START_EPOCH_MS   = 1775962163000;  // Unix ms of first event
-const GENERATED_AT     = 1776452322089;    // generation timestamp (ms) — forces hash change
+const GENERATED_AT     = 1776454210164;    // generation timestamp (ms) — forces hash change
 const TOTAL_DURATION   = EVENTS.length ? EVENTS[EVENTS.length - 1].ts : 0;
 const POST_BUFFER_REAL = 3;                   // real seconds of buffer after last event
 
