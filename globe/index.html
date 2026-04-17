@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Activity Globe</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -83,13 +84,37 @@ body { background: #000; overflow: hidden; font-family: 'Segoe UI', sans-serif; 
 }
 #tl-play:hover { background: rgba(80,130,255,0.15); }
 #tl-scrubber { flex: 1; accent-color: #4488ff; cursor: pointer; }
-#tl-time { color: #9ab; font-size: 10px; flex-shrink: 0; min-width: 155px; text-align: right; }
+#tl-time { color: #9ab; font-size: 12px; flex-shrink: 0; min-width: 155px; text-align: right; }
 #local-time {
   position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
-  color: #aacce8; font-size: 11px; font-family: 'Segoe UI', sans-serif;
-  background: rgba(8,12,28,0.75); padding: 4px 12px; border-radius: 6px;
+  color: #aacce8; font-size: 20px; font-family: 'Segoe UI', sans-serif;
+  background: rgba(8,12,28,0.75); padding: 6px 18px; border-radius: 8px;
   border: 1px solid rgba(80,130,255,0.2); pointer-events: none;
   white-space: nowrap; z-index: 10;
+}
+@media (max-width: 768px) {
+  #local-time {
+    font-size: 5.5vw; white-space: nowrap; max-width: 92vw;
+    overflow: hidden; text-overflow: ellipsis; padding: 5px 10px;
+  }
+  #tl-time { display: none; }
+  #timeline { height: 56px; padding: 0 12px; gap: 12px; }
+  #tl-play { width: 44px; height: 40px; font-size: 18px; border-radius: 8px; }
+  #tl-scrubber {
+    -webkit-appearance: none; appearance: none;
+    height: 4px; background: rgba(80,130,255,0.4);
+    border-radius: 2px; padding: 12px 0; flex: 1;
+  }
+  #tl-scrubber::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #4488ff; cursor: pointer;
+    box-shadow: 0 0 8px rgba(68,136,255,0.6);
+  }
+  #tl-scrubber::-moz-range-thumb {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #4488ff; border: none; cursor: pointer;
+  }
 }
 </style>
 </head>
@@ -212,7 +237,7 @@ const EVENTS           = [{"ts":0.0,"lat":37.09,"lon":-95.71,"region":"NA","loca
 const DEFAULT_SPEED    = 2865;   // playback speed multiplier
 const DEFAULT_DURATION = 2.0;// ping visual duration (real seconds)
 const START_EPOCH_MS   = 1775962163000;  // Unix ms of first event
-const GENERATED_AT     = 1776448572386;    // generation timestamp (ms) — forces hash change
+const GENERATED_AT     = 1776450617646;    // generation timestamp (ms) — forces hash change
 const TOTAL_DURATION   = EVENTS.length ? EVENTS[EVENTS.length - 1].ts : 0;
 const POST_BUFFER_REAL = 3;                   // real seconds of buffer after last event
 
