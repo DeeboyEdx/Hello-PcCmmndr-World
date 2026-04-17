@@ -116,6 +116,44 @@ body { background: #000; overflow: hidden; font-family: 'Segoe UI', sans-serif; 
     background: #4488ff; border: none; cursor: pointer;
   }
 }
+#info-wrap {
+  position: fixed; top: 16px; left: 16px; z-index: 20;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+#info-btn {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(8,12,28,0.75); border: 1px solid rgba(80,130,255,0.35);
+  color: #4488ff; font-size: 15px; font-style: italic; font-weight: 700;
+  font-family: Georgia, serif; cursor: pointer; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+#info-btn:hover { background: rgba(80,130,255,0.18); border-color: rgba(80,130,255,0.6); }
+#info-panel {
+  max-width: 280px; background: rgba(8,12,28,0.90);
+  border: 1px solid rgba(80,130,255,0.25); border-radius: 10px;
+  padding: 14px 16px; color: #ccd;
+  font-size: 12px; font-family: 'Segoe UI', sans-serif; line-height: 1.65;
+  backdrop-filter: blur(8px);
+  opacity: 0; pointer-events: none;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+#info-panel h4 {
+  margin: 0 0 8px; font-size: 11px; text-transform: uppercase;
+  letter-spacing: 1.5px; color: #7799cc;
+}
+#info-panel p { margin: 0 0 7px; }
+#info-panel p:last-child { margin: 0; }
+#info-panel .hl { color: #88bbff; }
+@media (hover: hover) {
+  #info-wrap:hover #info-panel {
+    opacity: 1; pointer-events: auto; transform: translateX(0);
+  }
+}
+#info-wrap.pinned #info-panel {
+  opacity: 1; pointer-events: auto; transform: translateX(0);
+}
 </style>
 </head>
 <body>
@@ -210,6 +248,17 @@ body { background: #000; overflow: hidden; font-family: 'Segoe UI', sans-serif; 
   <span>Auto-Rotate</span>
 </div>
 
+<div id="info-wrap">
+  <button id="info-btn">i</button>
+  <div id="info-panel">
+    <h4><span style="color:#00c896;font-size:12px;letter-spacing:1px;">PC Commander</span> Activity Globe</h4>
+    <p>A real-time playback of <a href="https://pccommander.net" target="_blank" style="color:#00c896;text-decoration:none;">PC Commander</a> Alexa skill usage across global AWS regions, mapped to their geographic origin.</p>
+    <p>Each pulse marks an individual skill invocation. The camera automatically pans toward the most active region as the timeline advances.</p>
+    <p><span class="hl">Top label</span> — local time approximated for the region currently facing the camera.</p>
+    <p><span class="hl">Drag</span> the globe to explore manually; pred-pan resumes on release.</p>
+  </div>
+</div>
+
 <div id="local-time">—</div>
 
 <div id="timeline">
@@ -237,7 +286,7 @@ const EVENTS           = [{"ts":0.0,"lat":37.09,"lon":-95.71,"region":"NA","loca
 const DEFAULT_SPEED    = 2865;   // playback speed multiplier
 const DEFAULT_DURATION = 2.0;// ping visual duration (real seconds)
 const START_EPOCH_MS   = 1775962163000;  // Unix ms of first event
-const GENERATED_AT     = 1776450617646;    // generation timestamp (ms) — forces hash change
+const GENERATED_AT     = 1776452322089;    // generation timestamp (ms) — forces hash change
 const TOTAL_DURATION   = EVENTS.length ? EVENTS[EVENTS.length - 1].ts : 0;
 const POST_BUFFER_REAL = 3;                   // real seconds of buffer after last event
 
@@ -625,7 +674,7 @@ function updatePredPan(dt) {
     camera.position.lerp(_ppTarget.clone().multiplyScalar(dist), slew);
     camera.position.normalize().multiplyScalar(dist);
     // Clamp camera latitude so it never goes to an uncomfortable polar view
-    const maxY = Math.sin(PP_MAX_LAT_DEG * Math.PI / 180);
+    const maxY = Math.sin((window.innerWidth <= 768 ? 40 : PP_MAX_LAT_DEG) * Math.PI / 180);
     const camN = camera.position.clone().normalize();
     if (Math.abs(camN.y) > maxY) {
       camN.y = Math.sign(camN.y) * maxY;
@@ -1044,6 +1093,10 @@ document.getElementById('ar-toggle').addEventListener('click', function () {
 document.getElementById('btn-reset').addEventListener('click', () => {
   document.cookie = 'actGlobeConfig=;path=/;max-age=0';
   applySettings({ ...DEFAULTS });
+});
+
+document.getElementById('info-btn').addEventListener('click', () => {
+  document.getElementById('info-wrap').classList.toggle('pinned');
 });
 
 // ── Timeline Controls ─────────────────────────────────────────────────────────
