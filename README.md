@@ -6,8 +6,6 @@ An animated 3D globe visualization of CloudWatch session activity.
 
 [View the live site](https://deeboyedx.github.io/Hello-PcCmmndr-World/)
 
-[View v0 (archived)](https://deeboyedx.github.io/Hello-PcCmmndr-World/globe/v0/)
-
 ## About
 
 This project showcases an interactive 3D globe that visualizes a replay of CloudWatch session activity.
